@@ -128,4 +128,4 @@ class MerkleTree {
     return root.equals(potentialRoot);
   }
 }
-module.exports = { MerkleTree };
+module.exports = MerkleTree;
