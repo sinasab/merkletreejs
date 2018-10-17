@@ -1,6 +1,6 @@
 {
-  "name": "@sinasabet81/merkletree",
-  "version": "1.0.2",
+  "name": "@sinasabet81/merkletreejs",
+  "version": "1.0.3",
   "main": "./src/index.js",
   "license": "MIT",
   "description": "Small merkle tree library for JS",
