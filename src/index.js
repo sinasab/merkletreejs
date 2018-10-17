@@ -129,11 +129,3 @@ class MerkleTree {
   }
 }
 module.exports = { MerkleTree };
-
-// const a = new MerkleTree(['hi', 'world', 'blarg'].map(defaultHashSha256));
-// console.log(a.toString());
-// const leaf = defaultHashSha256('hi');
-// const proof = a.getProof(leaf);
-// console.log(a.getPrettyProof(leaf));
-// const res = a.verifyProof(leaf, proof.proof, proof.root);
-// console.log(res);
