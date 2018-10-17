@@ -27,4 +27,8 @@ console.log(merkleTree.getPrettyLayers());
 //   ],
 //   ['7305db9b2abccd706c256db3d97e5ff48d677cfe4d3a5904afb7da0e3950e1e2'],
 // ];
+
+const proof = merkleTree.getProof(leaves[0]);
+const result = merkleTree.verifyProof(proof);
+console.log(result); // true
 ```
