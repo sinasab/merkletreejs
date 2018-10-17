@@ -5,8 +5,10 @@
 
 ## Usage
 ```js
+// the basics
+const MerkleTree = require('@sinasabet81/merkletreejs');
+
 const crypto = require('crypto');
-const MerkleTree = require('merkletreejs');
 
 const sha256 = preimage =>
   crypto
@@ -19,14 +21,22 @@ const leaves = preimages.map(sha256);
 
 const merkleTree = new MerkleTree(leaves, sha256);
 
+console.log(merkleTree.getPrettyRoot()); // '7305db9b2abccd706c256db3d97e5ff48d677cfe4d3a5904afb7da0e3950e1e2'
+
 console.log(merkleTree.getPrettyLayers());
-// [
-//   [
-//     '2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824',
-//     '486ea46224d1bb4fb680f34f7c9ad96a8f24ec88be73ea8e5a6c65260e9cb8a7',
-//   ],
-//   ['7305db9b2abccd706c256db3d97e5ff48d677cfe4d3a5904afb7da0e3950e1e2'],
-// ];
+// [ [ '2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824',
+//     '486ea46224d1bb4fb680f34f7c9ad96a8f24ec88be73ea8e5a6c65260e9cb8a7' ],
+//   [ '7305db9b2abccd706c256db3d97e5ff48d677cfe4d3a5904afb7da0e3950e1e2' ] ]
+
+console.log(merkleTree.getPrettyProof(leaves[0]));
+// { siblings:
+//   [ { siblingPosition: 'right',
+//       siblingHash:
+//        '486ea46224d1bb4fb680f34f7c9ad96a8f24ec88be73ea8e5a6c65260e9cb8a7' } ],
+//  leaf:
+//   '2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824',
+//  root:
+//   '7305db9b2abccd706c256db3d97e5ff48d677cfe4d3a5904afb7da0e3950e1e2' }
 
 const proof = merkleTree.getProof(leaves[0]);
 const result = merkleTree.verifyProof(proof);
