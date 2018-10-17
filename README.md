@@ -3,7 +3,7 @@
 [![npm (scoped)](https://img.shields.io/npm/v/@sinasabet81/merkletreejs.svg)](https://www.npmjs.com/package/@sinasabet81/merkletreejs)
 [![npm bundle size (minified)](https://img.shields.io/bundlephobia/min/@sinasabet81/merkletreejs.svg)](https://www.npmjs.com/package/@sinasabet81/merkletreejs)
 
-## usage
+## Usage
 ```js
 const crypto = require('crypto');
 const MerkleTree = require('merkletreejs');
@@ -31,4 +31,30 @@ console.log(merkleTree.getPrettyLayers());
 const proof = merkleTree.getProof(leaves[0]);
 const result = merkleTree.verifyProof(proof);
 console.log(result); // true
+```
+
+## Notes
+Naive use of this library could be vulerable to a second preimage attack; see [this blog post](https://flawed.net.nz/2018/02/21/attacking-merkle-trees-with-a-second-preimage-attack/) or [this wikipedia section](https://en.wikipedia.org/wiki/Merkle_tree#Second_preimage_attack) for more info. This attack can be avoided by using a separate hash function for your leaves and inner nodes. An example copied from the test file:
+```js
+const leafHashFunction = inputBuffer =>
+  sha256(Buffer.concat([Buffer.alloc(1, 0), inputBuffer]));
+const innerHashFunction = inputBuffer =>
+  sha256(Buffer.concat([Buffer.alloc(1, 1), inputBuffer]));
+
+const tree1Preimages = ['hello', 'world', 'foo', 'bar'].map(
+  Buffer.from,
+);
+const tree1Leaves = tree1Preimages.map(leafHashFunction);
+const tree1 = new MerkleTree(tree1Leaves, innerHashFunction);
+const tree1Root = tree1.getRoot();
+
+const tree2Preimages = [
+  Buffer.concat([tree1Leaves[0], tree1Leaves[1]]),
+  Buffer.concat([tree1Leaves[2], tree1Leaves[3]]),
+];
+const tree2Leaves = tree2Preimages.map(leafHashFunction);
+const tree2 = new MerkleTree(tree2Leaves, innerHashFunction);
+const tree2Root = tree2.getRoot();
+
+expect(tree1Root.equals(tree2Root)).toBeFalsy();
 ```
