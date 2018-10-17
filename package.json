@@ -1,8 +1,9 @@
 {
   "name": "@sinasabet81/merkletree",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./src/index.js",
   "license": "MIT",
+  "description": "Small merkle tree library for JS",
   "devDependencies": {
     "eslint": "^5.6.1",
     "eslint-config-airbnb-base": "^13.1.0",
@@ -13,8 +14,10 @@
     "prettier": "^1.14.3"
   },
   "scripts": {
+    "deploy": "npm publish --access=public",
     "test": "jest",
     "test:debug": "node --inspect node_modules/.bin/jest --runInBand"
   },
+  "repository": "sinasabet81/merkletreejs",
   "dependencies": {}
 }
